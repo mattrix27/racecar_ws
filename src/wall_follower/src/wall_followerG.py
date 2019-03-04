@@ -36,7 +36,7 @@ class WallFollower:
 
         rect_points = util.polar_to_cartesian(polar_points)
         rect_points = rect_points + np.array([0.275, 0])
-        # x, y = util.split_points(rect_points)
+        x, y = util.split_points(rect_points)
         # average_count = 3      # 5
         # rect_points = util.combine_points(util.moving_average(x,n=average_count),util.moving_average(y,n=average_count))
 
