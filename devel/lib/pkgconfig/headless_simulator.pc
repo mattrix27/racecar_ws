@@ -1,0 +1,8 @@
+prefix=/home/racecar/racecar_ws/devel
+
+Name: headless_simulator
+Description: Description of headless_simulator
+Version: 0.0.1
+Cflags: 
+Libs: -L/home/racecar/racecar_ws/devel/lib 
+Requires: message_runtime rospy sensor_msgs std_msgs
