@@ -30,7 +30,7 @@ class SafetyController:
 
     def react_to_nav(self, nav):
  	x, y = self.to_cartesian(self.last_scan.ranges, self.last_scan.angle_min, self.last_scan.angle_increment)
-	if self.danger_in_box(x, y, nav.drive.steering_angle):
+	if self.danger_in_box(x, y, nav.drive.steering_angle) and nav.drive.speed > 0:
 	    self.stop()
 
     def to_cartesian(self, ranges, angle_min, angle_increment):
@@ -81,16 +81,16 @@ class SafetyController:
 	return 1 if y > fx else -1	
 
     def stop(self):
-	msg = AckermannDriveStamped()
-	msg.header.stamp = rospy.Time.now()
-	msg.header.frame_id = "base_link"
-	msg.drive.steering_angle = 0
-	msg.drive.steering_angle_velocity = 0
-	msg.drive.speed = 0
-	msg.drive.acceleration = 0
-	msg.drive.jerk = 0  
-	rospy.loginfo(msg)
-	self.pub.publish(msg)
+		msg = AckermannDriveStamped()
+		msg.header.stamp = rospy.Time.now()
+		msg.header.frame_id = "base_link"
+		msg.drive.steering_angle = 0
+		msg.drive.steering_angle_velocity = 0
+		msg.drive.speed = 0
+		msg.drive.acceleration = 0
+		msg.drive.jerk = 0  
+		rospy.loginfo(msg)
+		self.pub.publish(msg)
 	
 
 if __name__ == "__main__":
