@@ -37,6 +37,7 @@ def closest_point(points):
     closet_index = np.argmin(points, axis=0)[0]
     return points[closet_index]
 
+
 def points_in_circle(main_point, list_of_points, radius):
     vectors = list_of_points - main_point
     magnitudes = magnitude(vectors)
@@ -47,16 +48,23 @@ def points_in_circle(main_point, list_of_points, radius):
 def generate_path_from_wall(points, distance_from_wall, side):
     # TODO Optimize
     path = []
-    for current_point in points:
-        expand_rate = 0.05
-        expansion = 0
-        nearby_points = points_in_circle(current_point, points, distance_from_wall)
+    for current_point_index in range(5, points.shape[0] - 5):
+        current_point = points[current_point_index]
 
-        while nearby_points.shape[0] < 2:
-            nearby_points = points_in_circle(current_point, points, distance_from_wall + expansion)
-            expansion += expand_rate
-	
-	# print(find_vector(nearby_points))
+        nearby_points = np.array([points[current_point_index- 5], points[current_point_index + 5]])
+
+        # nearby_points = points_in_circle(current_point, points, distance_from_wall)
+
+        if nearby_points.shape[0] < 2:
+            break
+
+        # expand_rate = 0.05
+        # expansion = 0
+        # while nearby_points.shape[0] < 2:
+        #     nearby_points = points_in_circle(current_point, points, distance_from_wall + expansion)
+        #     expansion += expand_rate
+
+        # print(find_vector(nearby_points))
         norm_vec = np.flip(find_vector(nearby_points),0) * np.array([-1, 1])
         unit_vec = norm_vec / magnitude(norm_vec)
 
@@ -71,6 +79,15 @@ def generate_path_from_wall(points, distance_from_wall, side):
         path.append(path_point)
 
     return np.array(path)
+
+
+def limit_output(value, limit):
+    if value > limit:
+        return limit
+    elif value < -limit:
+        return -limit
+    else:
+        return value
 
 
 def filter_laser_scan(points, threshold = 0.5):
