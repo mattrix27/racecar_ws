@@ -1,0 +1,7 @@
+max_nodes: 5000
+step: 2
+range_to_goal: 0.5
+obstacle_resolution: 0.5
+rrt_mode: "RRT" # "RRT*" or "RRT"
+map_topic: "/map"
+greedy_rate: 0.2

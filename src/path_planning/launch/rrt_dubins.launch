@@ -1,0 +1,9 @@
+<launch>
+  <!-- Launch a map from the maps folder-->
+  <arg name="map" default="$(find racecar_simulator)/maps/stata_basement.yaml"/>
+  <node pkg="map_server" name="map_server" type="map_server" args="$(arg map)"/>
+  <node pkg="lab6" type="rrt_dubins.py" name="rrt_planner" output="screen">
+	<rosparam command="load" file="$(find lab6)/rrt_dubins_params.yaml"/>
+  </node>
+</launch>
+

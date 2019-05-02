@@ -1,0 +1,13 @@
+<launch>
+  <!-- Launch a map from the maps folder-->
+  <arg name="map" default="$(find lab6)/maps/new_stata.yaml"/>
+  <node pkg="map_server" name="map_server_planner" type="map_server" args="$(arg map)">
+  	<remap from="map" to="map_planner"/> 
+    <remap from="map_metadata" to="map_metadata_planner"/> 
+    <remap from="static_map" to="static_map_planner"/>
+  </node>
+  <node pkg="lab6" type="rrt_main.py" name="rrt_planner" output="screen">
+	<rosparam command="load" file="$(find lab6)/rrt_params.yaml"/>
+  </node>
+</launch>
+
